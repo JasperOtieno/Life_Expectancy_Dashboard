@@ -2,9 +2,9 @@ import streamlit as st
 
 from config import DATA_PATH, PAGE_CONFIG
 from data_loader import load_data, clean_data, validate_data
-from sidebar import sidebar_filters, apply_filters
+from sidebar import sidebar_filters, apply_filters, NUMERIC_VARIABLES
 from kpis import compute_kpis, render_kpis
-from relationships import life_expectancy_vs_co2, health_expenditure_vs_life
+from relationships import variable_relationship
 from trends import country_life_expectancy_trend
 
 
@@ -27,20 +27,22 @@ def main() -> None:
     st.subheader("Key Performance Indicators")
     render_kpis(compute_kpis(filtered_df))
 
-    st.subheader("Cross-Sectional Relationships")
-    col1, col2 = st.columns(2)
+    st.subheader("Relationship Analysis")
 
-    with col1:
-        st.plotly_chart(life_expectancy_vs_co2(filtered_df), use_container_width=True)
-
-    with col2:
-        st.plotly_chart(health_expenditure_vs_life(filtered_df), use_container_width=True)
-
-    st.subheader("Country Trend Analysis")
-    country = st.selectbox("Select Country", sorted(df["country"].unique()))
+    x_var = NUMERIC_VARIABLES[filters["x_variable"]]
+    y_var = NUMERIC_VARIABLES[filters["y_variable"]]
 
     st.plotly_chart(
-        country_life_expectancy_trend(df, country),
+        variable_relationship(filtered_df, x_var, y_var),
+        use_container_width=True
+    )
+
+    st.subheader("Trend Analysis")
+
+    trend_var = NUMERIC_VARIABLES[filters["trend_variable"]]
+
+    st.plotly_chart(
+        trend_over_time(filtered_df, trend_var),
         use_container_width=True
     )
 
