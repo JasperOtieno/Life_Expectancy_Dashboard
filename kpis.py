@@ -20,7 +20,7 @@ def compute_kpis(df: pd.DataFrame) -> dict:
     }
 
 # Render KPI cards.
-kpi_items = list(kpis.items())
+kpi_items = list(compute_kpis.items())
 
 rows = [
     kpi_items[:4],
