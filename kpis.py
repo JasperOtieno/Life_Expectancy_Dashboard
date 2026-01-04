@@ -20,8 +20,14 @@ def compute_kpis(df: pd.DataFrame) -> dict:
     }
 
 # Render KPI cards.
-def render_kpis(kpis: dict) -> None:
-    cols = st.columns(len(kpis))
+kpi_items = list(kpis.items())
 
-    for col, (label, value) in zip(cols, kpis.items()):
+rows = [
+    kpi_items[:4],
+    kpi_items[4:]
+]
+
+for row in rows:
+    cols = st.columns(len(row))
+    for col, (label, value) in zip(cols, row):
         col.metric(label, value)
