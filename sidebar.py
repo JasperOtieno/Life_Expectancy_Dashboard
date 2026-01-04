@@ -4,12 +4,28 @@
 import streamlit as st
 import pandas as pd
 
-# Render sidebar widgets and return selected filters.
-def sidebar_filters(df: pd.DataFrame) -> dict:
 
+NUMERIC_VARIABLES = {
+    "Life Expectancy": "life_expectancy",
+    "CO2 Emissions": "co2_emissions",
+    "Health Expenditure (%)": "health_exp_pct",
+    "Education Expenditure (%)": "education_exp_pct",
+    "Unemployment (%)": "unemployment",
+    "Sanitation Access (%)": "sanitation_access",
+    "Undernourishment": "undernourishment",
+    "Communicable Diseases": "communicable",
+    "Non-Communicable Diseases": "non_communicable",
+    "Injuries": "injuries",
+    "Corruption Index": "corruption_index"
+}
+
+
+def sidebar_filters(df: pd.DataFrame) -> dict:
     st.sidebar.header("Filters")
 
-    return {
+    st.sidebar.subheader("Population Filters")
+
+    filters = {
         "regions": st.sidebar.multiselect(
             "Region",
             sorted(df["region"].unique()),
@@ -25,20 +41,43 @@ def sidebar_filters(df: pd.DataFrame) -> dict:
             sorted(df["income_group"].unique()),
             default=sorted(df["income_group"].unique())
         ),
-        "year": st.sidebar.slider(
-            "Year",
+        "year_range": st.sidebar.slider(
+            "Year Range",
             int(df["year"].min()),
             int(df["year"].max()),
-            int(df["year"].max())
+            (int(df["year"].min()), int(df["year"].max()))
         )
     }
 
-# Apply sidebar filters to the dataset.
+    st.sidebar.subheader("Analysis Controls")
+
+    filters["trend_variable"] = st.sidebar.selectbox(
+        "Trend Variable",
+        list(NUMERIC_VARIABLES.keys()),
+        index=0
+    )
+
+    filters["x_variable"] = st.sidebar.selectbox(
+        "X-axis Variable",
+        list(NUMERIC_VARIABLES.keys()),
+        index=1
+    )
+
+    filters["y_variable"] = st.sidebar.selectbox(
+        "Y-axis Variable",
+        list(NUMERIC_VARIABLES.keys()),
+        index=0
+    )
+
+    return filters
+
+
 def apply_filters(df: pd.DataFrame, filters: dict) -> pd.DataFrame:
+    start_year, end_year = filters["year_range"]
 
     return df[
         (df["region"].isin(filters["regions"])) &
         (df["country"].isin(filters["countries"])) &
         (df["income_group"].isin(filters["income_groups"])) &
-        (df["year"] == filters["year"])
+        (df["year"].between(start_year, end_year))
     ]
