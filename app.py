@@ -11,7 +11,7 @@ DATA_PATH = "life_expectancy_world_bank.csv"
 # Set page title and layout
 def configure_app() -> None:
     st.set_page_config(
-        page_title="Global Life Expectancy & Socio-Economic Dashboard",
+        page_title="Life Expectancy & Socio-Economic Dashboard",
         layout="wide"
     )
 
