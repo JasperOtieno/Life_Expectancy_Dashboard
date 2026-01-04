@@ -11,7 +11,7 @@ def compute_kpis(df: pd.DataFrame) -> dict:
     return {
         "Life Expectancy": round(df["life_expectancy"].mean(), 1),
         "Unemployment (%)": round(df["unemployment"].mean(), 1),
-        "Sanitation (%)": round(df["sanitation_access"].mean(), 1),
+        "Sanitation Access (%)": round(df["sanitation_access"].mean(), 1),
         "Health Expenditure (%)": round(df["health_exp_pct"].mean(), 1),
         "Education Expenditure (%)": round(df["education_exp_pct"].mean(), 1),
         "Undernourishment": round(df["undernourishment"].mean(), 1),
