@@ -22,24 +22,28 @@ NUMERIC_VARIABLES = {
 
 def sidebar_filters(df: pd.DataFrame) -> dict:
     st.sidebar.header("Filters")
-
     st.sidebar.subheader("Population Filters")
+
+    # Set default values if they exist in the dataframe
+    default_region = "Sub-Saharan Africa" if "Sub-Saharan Africa" in df["region"].unique() else None
+    default_country = "Kenya" if "Kenya" in df["country"].unique() else None
+    default_income = "Lower middle income" if "Lower middle income" in df["income_group"].unique() else None
 
     filters = {
         "regions": st.sidebar.multiselect(
             "Region",
             sorted(df["region"].unique()),
-            default=sorted(df["region"].unique())
+            default=[default_region] if default_region else sorted(df["region"].unique())
         ),
         "countries": st.sidebar.multiselect(
             "Country",
             sorted(df["country"].unique()),
-            default=sorted(df["country"].unique())
+            default=[default_country] if default_country else sorted(df["country"].unique())
         ),
         "income_groups": st.sidebar.multiselect(
             "Income Group",
             sorted(df["income_group"].unique()),
-            default=sorted(df["income_group"].unique())
+            default=[default_income] if default_income else sorted(df["income_group"].unique())
         ),
         "year_range": st.sidebar.slider(
             "Year Range",
