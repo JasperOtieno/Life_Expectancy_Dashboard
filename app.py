@@ -5,7 +5,7 @@ from data_loader import load_data, clean_data, validate_data
 from sidebar import sidebar_filters, apply_filters, NUMERIC_VARIABLES
 from kpis import compute_kpis, render_kpis
 from relationships import variable_relationship
-from trends import country_life_expectancy_trend
+from trends import trend_over_time
 
 
 def main() -> None:
