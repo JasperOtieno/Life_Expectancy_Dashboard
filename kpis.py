@@ -19,15 +19,17 @@ def compute_kpis(df: pd.DataFrame) -> dict:
         "Corruption Index": round(df["corruption_index"].mean(), 1)
     }
 
-# Render KPI cards.
-kpi_items = list(compute_kpis.items())
+# Render KPI cards in multiple rows to avoid compression.
+def render_kpis(kpis: dict) -> None:
 
-rows = [
-    kpi_items[:4],
-    kpi_items[4:]
-]
+    kpi_items = list(kpis.items())
 
-for row in rows:
-    cols = st.columns(len(row))
-    for col, (label, value) in zip(cols, row):
-        col.metric(label, value)
+    rows = [
+        kpi_items[:4],
+        kpi_items[4:]
+    ]
+
+    for row in rows:
+        cols = st.columns(len(row))
+        for col, (label, value) in zip(cols, row):
+            col.metric(label, value)
