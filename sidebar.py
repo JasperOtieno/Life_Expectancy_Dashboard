@@ -21,7 +21,7 @@ NUMERIC_VARIABLES = {
 
 
 def sidebar_filters(df: pd.DataFrame) -> dict:
-    st.sidebar.header("Filters")
+    #st.sidebar.header("Filters")
     st.sidebar.subheader("Population Filters")
 
     # Set default values if they exist in the dataframe
