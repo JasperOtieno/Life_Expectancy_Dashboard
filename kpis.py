@@ -9,14 +9,17 @@ import pandas as pd
 def compute_kpis(df: pd.DataFrame) -> dict:
 
     return {
-        "Life Expectancy": round(df["life_expectancy"].mean(), 1),
-        "Unemployment (%)": round(df["unemployment"].mean(), 1),
-        "Sanitation Access (%)": round(df["sanitation_access"].mean(), 1),
-        "Health Expenditure (%)": round(df["health_exp_pct"].mean(), 1),
-        "Education Expenditure (%)": round(df["education_exp_pct"].mean(), 1),
-        "Undernourishment": round(df["undernourishment"].mean(), 1),
-        "CO2 Emissions": round(df["co2_emissions"].mean(), 1),
-        "Corruption Index": round(df["corruption_index"].mean(), 1)
+        "Life Expectancy": round(df["life_expectancy"].mean(), 2),
+        "Unemployment (%)": round(df["unemployment"].mean(), 2),
+        "Sanitation Access (%)": round(df["sanitation_access"].mean(), 2),
+        "Health Expenditure (%)": round(df["health_exp_pct"].mean(), 2),
+        "Education Expenditure (%)": round(df["education_exp_pct"].mean(), 2),
+        "Undernourishment": round(df["undernourishment"].mean(), 2),
+        "CO2 Emissions": round(df["co2_emissions"].mean(), 2),
+        "Corruption Index": round(df["corruption_index"].mean(), 2),
+        "Injury related deaths": round(df["injuries"].mean(), 2),
+        "Communicable Diseases": round(df["communicable"].mean(), 2),
+        "Non Communicable Diseases": round(df["non_communicable"].mean(), 2)
     }
 
 # Render KPI cards in multiple rows to avoid compression.
@@ -26,7 +29,8 @@ def render_kpis(kpis: dict) -> None:
 
     rows = [
         kpi_items[:4],
-        kpi_items[4:]
+        kpi_items[4],
+        kpi_items[3:]
     ]
 
     for row in rows:
