@@ -29,8 +29,8 @@ def render_kpis(kpis: dict) -> None:
 
     rows = [
         kpi_items[:4],
-        kpi_items[4],
-        kpi_items[3:]
+        kpi_items[4:8],
+        kpi_items[8:]
     ]
 
     for row in rows:
